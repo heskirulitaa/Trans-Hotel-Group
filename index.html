@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>Trans Hotel Group</title>
-    <link rel="icon" href="img/thg_logo_white.png" type="image/png" />
+    <link rel="icon" href="img/thglogo.png" type="image/png" />
 
-    <!-- Montserrat font -->
+    <!-- Font -->
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
       rel="stylesheet"
@@ -46,7 +46,7 @@
         );
       }
 
-      /* logo link kanan‑atas */
+      /* logo kanan‑atas */
       .brand-link {
         position: fixed;
         top: 16px;
@@ -73,10 +73,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        position: relative;
         font-size: 18px;
         font-weight: 600;
         color: #fff;
+        position: relative;
       }
       .back {
         position: absolute;
@@ -95,7 +95,11 @@
         color: var(--rosewood-2);
       }
 
-      /* ----- kartu hotel ----- */
+      /* kartu hotel clickable */
+      .card-link {
+        display: block;
+        text-decoration: none;
+      }
       .card {
         background: var(--snow);
         border-radius: var(--card-radius);
@@ -105,11 +109,15 @@
         gap: 18px;
         margin: 0 24px 24px;
         align-items: stretch;
+        transition: transform 0.15s ease;
+      }
+      .card:hover {
+        transform: translateY(-3px);
       }
       .card img.logo {
-        width: 120px; /* lebar ideal 3:2 */
-        height: 100%; /* sama‑tinggi dgn kolom teks */
-        object-fit: cover; /* crop rapi */
+        width: 120px;
+        height: 100%;
+        object-fit: cover;
         border-radius: 12px;
         flex-shrink: 0;
       }
@@ -139,7 +147,7 @@
         display: block;
       }
 
-      /* ----- deskripsi ----- */
+      /* deskripsi */
       .about {
         margin: 0 24px;
         padding: 16px;
@@ -186,7 +194,7 @@
       rel="noopener"
       class="brand-link"
     >
-      <img src="img/thg_logo.png" alt="Trans Hotel Group" class="brand" />
+      <img src="img/thglogo.png" alt="Trans Hotel Group" class="brand" />
     </a>
 
     <div class="app">
@@ -208,44 +216,50 @@
     </div>
 
     <script>
-      /* data hotel */
+      /* data hotel + link */
       const locations = [
         {
           logo: "https://www.thetranshotel.com/images/gallery/images/1-GEDUNG.jpg",
           title: "The Trans Luxury Hotel Bandung",
           city: "Kota Bandung, Jawa Barat",
-          promo: "Promo AlloBank Bertiga Hanya 140 Ribu/Orang!",
+          promo: "Harga Spesial DETIK!",
           price: "Rp140.000",
+          url: "https://reservations.travelclick.com/107718?RatePlanId=10190603",
         },
         {
           logo: "https://transresortbali.com/cms/storage/app/uploads/public/674/e80/19e/674e8019e8ca2227075225.jpg?_gl=1*5gh48e*_gcl_au*MTE1Mjk1OTY5LjE3NTAxMzI1OTc.",
           title: "The Trans Resort Bali",
-          city: "Kuta, Bali",
-          promo: "Promo School Break, Healing Makin Hemat!",
+          city: "Seminyak, Bali",
+          promo: "Harga Spesial DETIK!",
           price: "Rp150.000",
+          url: "https://reservations.travelclick.com/110376?RatePlanId=10190570",
         },
         {
           logo: "https://fourstarbytranshotel.com/cms/storage/app/uploads/public/679/c3f/ea8/679c3fea86359380748333.jpg",
           title: "Four Star by Trans Hotel Bali",
           city: "Denpasar, Bali",
-          promo: "Presale School Holiday!",
+          promo: "Harga Spesial DETIK",
           price: "Rp100.000",
+          url: "https://reservations.travelclick.com/114787?RatePlanId=10194030",
         },
       ];
 
+      /* render kartu */
       const list = document.getElementById("list");
       locations.forEach((loc) => {
         list.insertAdjacentHTML(
           "beforeend",
-          `<div class="card">
-          <img class="logo" src="${loc.logo}" alt="${loc.title}">
-          <div>
-            <h3>${loc.title}</h3>
-            <div class="info">📍 ${loc.city}</div>
-            <div class="promo">％ ${loc.promo}</div>
-            <div class="price"><span class="label">Mulai dari</span>${loc.price}</div>
+          `<a href="${loc.url}" target="_blank" rel="noopener" class="card-link">
+          <div class="card">
+            <img class="logo" src="${loc.logo}" alt="${loc.title}">
+            <div>
+              <h3>${loc.title}</h3>
+              <div class="info">📍 ${loc.city}</div>
+              <div class="promo">％ ${loc.promo}</div>
+              <div class="price"><span class="label">Mulai dari</span>${loc.price}</div>
+            </div>
           </div>
-        </div>`
+        </a>`
         );
       });
 
@@ -254,7 +268,8 @@
       const btn = document.querySelector(".readmore");
       const shortText =
         "Trans Hotel Group (THG) adalah perusahaan perhotelan Indonesia yang memiliki, mengelola, dan melakukan waralaba hotel, resor, serta properti liburan.";
-      const fullText = `Trans Hotel Group (THG), sebuah karya dari Trans Corporation, adalah salah satu perusahaan perhotelan yang berkembang pesat di Indonesia yang memiliki, mengelola, dan melakukan waralaba hotel, resor, serta properti liburan. Koleksi THG meliputi The Trans Luxury Hotel, Bandung; The Trans Luxury Yacht; The Trans Resort Bali; Four Star by Trans Hotel Bali; Aston Tanjungpinang; ibis Bandung Trans Studio; dan Fashion Hotel Legian, Bali.`;
+      const fullText =
+        "Trans Hotel Group (THG), sebuah karya dari Trans Corporation, adalah salah satu perusahaan perhotelan yang berkembang pesat di Indonesia yang memiliki, mengelola, dan melakukan waralaba hotel, resor, serta properti liburan. Koleksi THG meliputi The Trans Luxury Hotel, Bandung; The Trans Luxury Yacht; The Trans Resort Bali; Four Star by Trans Hotel Bali; Aston Tanjungpinang; ibis Bandung Trans Studio; dan Fashion Hotel Legian, Bali.";
       let expanded = false;
       descEl.textContent = shortText;
       function toggleDesc() {
