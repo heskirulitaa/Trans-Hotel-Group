@@ -1,0 +1,407 @@
+website THG
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trans Hotel Group</title>
+
+    <!-- Luxury font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --white: #ffffffff;
+        --white-soft: #fdfdfdff;
+        --gold: #76602bff;
+        --gold-dark: #8d762cff;
+        --olive: #8d7c4bff;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Cormorant Garamond", serif;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+      }
+
+      /* ===== NAVBAR ===== */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        padding: 12px 40px;
+        transition: background 0.35s, box-shadow 0.35s;
+      }
+      .navbar.transparent {
+        background: transparent;
+      }
+      .navbar.scrolled {
+        background: var(--white);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      }
+      .logo img {
+        height: 48px;
+        filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.7));
+      }
+      .navbar.scrolled .logo img {
+        filter: none;
+      }
+      .navbar ul {
+        list-style: none;
+        display: flex;
+        gap: 28px;
+        flex: 1;
+        justify-content: center;
+      }
+      .navbar a {
+        color: var(--white-soft);
+        text-decoration: none;
+        font-size: 1rem;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+        transition: color 0.35s;
+      }
+      .navbar a:hover {
+        color: var(--olive);
+      }
+      .navbar.scrolled a {
+        color: var(--gold);
+        text-shadow: none;
+      }
+      .navbar.scrolled a:hover {
+        color: var(--gold-dark);
+      }
+
+      /* ===== BUTTONS ===== */
+      .book-btn {
+        background: var(--gold);
+        color: var(--white);
+        padding: 0.6rem 1.6rem;
+        border: none;
+        border-radius: 999px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.35s;
+        text-decoration: none;
+      }
+      .book-btn:hover {
+        background: var(--gold-dark);
+      }
+      .navbar .book-btn {
+        background: transparent;
+        color: var(--gold);
+        border: 2px solid var(--gold);
+        padding: 0.5rem 1.2rem;
+      }
+      .navbar .book-btn:hover {
+        background: var(--gold);
+        color: var(--white);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      /* ===== HERO ===== */
+      .hero {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+      }
+      .slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transition: opacity 1s;
+      }
+      .slide.active {
+        opacity: 1;
+        z-index: 1;
+      }
+      .overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 2;
+      }
+      .hero-headings {
+        position: relative;
+        z-index: 3;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: var(--white-soft);
+      }
+      .hero h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: var(--white);
+        text-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+      }
+
+      .hero h2 {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: #570409ff;
+        margin-top: 0.5rem;
+        letter-spacing: 1px;
+        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      }
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 2.6rem;
+        }
+        .hero h2 {
+          font-size: 1.3rem;
+        }
+      }
+
+      /* ===== BOOKING FORM ===== */
+      .booking-form {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 3;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: nowrap;
+        max-width: 95vw;
+        padding: 0 1rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+      }
+      .booking-form::-webkit-scrollbar {
+        height: 0;
+      }
+      .booking-form select,
+      .booking-form input {
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid var(--white-soft);
+        color: var(--white-soft);
+        min-width: 150px;
+        padding: 0.5rem;
+        font-size: 1rem;
+        scroll-snap-align: center;
+        appearance: none;
+      }
+      select,
+      input[type="date"] {
+        color-scheme: dark;
+      }
+      .booking-form select:focus,
+      .booking-form input:focus {
+        outline: none;
+        border-bottom: 1px solid var(--gold);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===== NAVBAR ===== -->
+    <nav id="navbar" class="navbar transparent">
+      <div class="logo">
+        <img
+          src="https://salila-indonesia.com/wp-content/uploads/2025/06/thg_logo_resized.png"
+          alt="Logo"
+        />
+      </div>
+      <ul>
+        <li><a href="https://salila-indonesia.com/">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#hotels">Hotels</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="javascript:void(0)" class="book-btn" onclick="scrollToBooking()"
+        >Find Hotel</a
+      >
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <div
+        class="slide active"
+        style="
+          background-image: url('https://salila-indonesia.com/wp-content/uploads/2025/06/cropped-1479097083.webp');
+        "
+      ></div>
+      <div
+        class="slide"
+        style="
+          background-image: url('https://salila-indonesia.com/wp-content/uploads/2025/06/a1e01fab40fc6a97ebe21dd4578f10ee-scaled.webp');
+        "
+      ></div>
+      <div
+        class="slide"
+        style="
+          background-image: url('https://salila-indonesia.com/wp-content/uploads/2025/06/681046cef2efb121830537.webp');
+        "
+      ></div>
+      <div
+        class="slide"
+        style="
+          background-image: url('https://salila-indonesia.com/wp-content/uploads/2025/06/17108233.webp');
+        "
+      ></div>
+      <div
+        class="slide"
+        style="
+          background-image: url('https://salila-indonesia.com/wp-content/uploads/2025/06/8060_ho_00_p_1024x768.webp');
+        "
+      ></div>
+
+      <div class="overlay"></div>
+
+      <div class="hero-headings">
+        <h1>DISCOVER</h1>
+        <h2>TRANS HOTEL GROUP</h2>
+      </div>
+
+      <!-- BOOKING FORM -->
+      <form id="book" class="booking-form">
+        <select name="location" id="location" required>
+          <option value="" disabled selected>Location</option>
+          <option value="luxury">Trans Luxury Hotel Bandung</option>
+          <option value="bali">The Trans Resort Bali</option>
+          <option value="fourstar">Four Star by Trans Hotel</option>
+          <option value="aston">Aston Tanjung Pinang</option>
+          <option value="ibis">Ibis Trans Studio Bandung</option>
+        </select>
+
+        <input type="date" name="checkin" id="checkin" required />
+        <input type="date" name="checkout" id="checkout" required />
+
+        <select name="adults" id="adults" required>
+          <option value="1">1 Adult</option>
+          <option value="2">2 Adults</option>
+          <option value="3">3 Adults</option>
+          <option value="4">4 Adults</option>
+        </select>
+
+        <select name="rooms" id="rooms" required>
+          <option value="1">1 Room</option>
+          <option value="2">2 Rooms</option>
+          <option value="3">3 Rooms</option>
+        </select>
+
+        <button type="submit" class="book-btn">Book Now</button>
+      </form>
+    </section>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+      /* === Slider === */
+      const slides = document.querySelectorAll(".slide");
+      let s = 0;
+      setInterval(() => {
+        slides[s].classList.remove("active");
+        s = (s + 1) % slides.length;
+        slides[s].classList.add("active");
+      }, 5000);
+
+      /* === Navbar bg on scroll === */
+      const nav = document.getElementById("navbar");
+      const heroH = document.querySelector(".hero").offsetHeight;
+      window.addEventListener("scroll", () => {
+        const y = window.scrollY;
+        nav.classList.toggle("scrolled", y > heroH - 80);
+        nav.classList.toggle("transparent", y <= heroH - 80);
+      });
+
+      /* === Date validation (ci≥today, co≥ci+1) === */
+      (() => {
+        const ci = document.getElementById("checkin"),
+          co = document.getElementById("checkout");
+        if (!ci || !co) return;
+        const fmt = (d) => d.toISOString().split("T")[0];
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+        ci.min = fmt(today);
+        co.min = fmt(tomorrow);
+        ci.value = fmt(today);
+        co.value = fmt(tomorrow);
+        ci.addEventListener("change", (e) => {
+          const inD = new Date(e.target.value);
+          if (isNaN(inD)) return;
+          const outMin = new Date(inD);
+          outMin.setDate(inD.getDate() + 1);
+          co.min = fmt(outMin);
+          if (new Date(co.value) <= inD) co.value = fmt(outMin);
+        });
+      })();
+
+      /* === Scroll nav button === */
+      function scrollToBooking() {
+        const f = document.getElementById("book");
+        if (f) {
+          const y = f.getBoundingClientRect().top + window.pageYOffset - 80;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      }
+
+      /* === Dynamic redirect on form submit === */
+      document.getElementById("book").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const loc = document.getElementById("location").value;
+        const ci = document.getElementById("checkin").value; // yyyy-mm-dd
+        const co = document.getElementById("checkout").value;
+        const ad = document.getElementById("adults").value;
+        const rm = document.getElementById("rooms").value;
+
+        let url = "#";
+        if (loc === "luxury") {
+          /* Trans Luxury Hotel Bandung */
+          // convert yyyy-mm-dd → m/d/yyyy
+          const toMDY = (d) => {
+            const [Y, M, D] = d.split("-");
+            return parseInt(M, 10) + "/" + parseInt(D, 10) + "/" + Y;
+          };
+          url = `https://reservations.thetranshotel.com/107718?Adults=${ad}&DateIn=${toMDY(
+            ci
+          )}&DateOut=${toMDY(
+            co
+          )}&domain=www.thetranshotel.com&Rooms=${rm}&themeid=17368#/accommodation/room`;
+        } else if (loc === "ibis") {
+          url = `https://all.accor.com/ssr/app/accor/rates/8060/index.id.shtml?dateIn=${ci}&nights=${
+            (new Date(co) - new Date(ci)) / 86400000
+          }&compositions=${ad}&stayplus=false&snu=false&accessibleRooms=false&hideWDR=false&productCode=null&hideHotelDetails=true`;
+        } else if (loc === "bali") {
+          url = "https://reservations.transresortbali.com/book/accommodations";
+        } else if (loc === "fourstar") {
+          url =
+            "https://reservations.fourstarbytranshotel.com/114787#/accommodation/room";
+        } else if (loc === "aston") {
+          url = "#";
+        }
+        window.open(url, "_blank");
+      });
+    </script>
+  </body>
+</html>
